@@ -11,15 +11,14 @@ WORKDIR /app
 RUN pip install --no-cache-dir --upgrade pip
 
 # Install backend dependencies
-COPY backend/requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend source code
-COPY backend ./backend
+# Copy backend source code (everything in context)
+COPY . .
 
 # Expose port for documentation purposes (Cloud Run uses $PORT)
 EXPOSE 8080
 
 # Start FastAPI with uvicorn
-# Cloud Run injects $PORT (default 8080); we fall back to 8080 if not set
-CMD ["sh", "-c", "uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}"]
