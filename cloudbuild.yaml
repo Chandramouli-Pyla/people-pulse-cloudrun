@@ -1,14 +1,13 @@
 steps:
-  - name: gcr.io/cloud-builders/docker
-    args:
-      [
-        "build",
-        "-t",
-        "$_IMAGE",
-        "-f",
-        "backend/Dockerfile",
-        "backend"
-      ]
+- name: gcr.io/cloud-builders/docker
+  args: [
+    "build",
+    "-t",
+    "gcr.io/$PROJECT_ID/peoplepulse-backend",
+    "-f",
+    "backend/Dockerfile",
+    "backend"
+  ]
 
 images:
-  - "$_IMAGE"
+- "gcr.io/$PROJECT_ID/peoplepulse-backend"
