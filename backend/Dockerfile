@@ -1,24 +1,21 @@
-# backend/Dockerfile
-
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-WORKDIR /app
-
-# Upgrade pip
-RUN pip install --no-cache-dir --upgrade pip
+# Set working directory to backend
+WORKDIR /app/backend
 
 # Install backend dependencies
-COPY requirements.txt .
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend source code (everything in context)
-COPY . .
+# Copy backend source code only
+COPY backend/ .
 
-# Expose port for documentation purposes (Cloud Run uses $PORT)
+# Ensure /app is in Python path
+ENV PYTHONPATH="/app"
+
 EXPOSE 8080
 
-# Start FastAPI with uvicorn
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
