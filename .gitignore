@@ -1,0 +1,14 @@
+.git
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+logs
+migrations
+.secret
+.DS_Store
+.idea
+secret/
+*.json
+.env
