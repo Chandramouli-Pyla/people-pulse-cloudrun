@@ -1,11 +1,6 @@
-import os
-
 import requests
-from dotenv import load_dotenv
 
-load_dotenv()
-
-BASE_URL = os.getenv("BASE_URL")
+BASE_URL = "https://peoplepulse-backend-846180434882.us-central1.run.app"
 
 if not BASE_URL:
     raise ValueError("BASE_URL not set")

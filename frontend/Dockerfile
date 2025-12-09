@@ -1,26 +1,18 @@
-# frontend/Dockerfile
-
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-WORKDIR /app
+WORKDIR /app/frontend
 
-RUN pip install --no-cache-dir --upgrade pip
-
-# Install frontend dependencies
-COPY frontend/requirements.txt .
+# Install dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy frontend source code
-COPY frontend ./frontend
+# Copy all frontend files
+COPY . .
 
 EXPOSE 8080
 
-# Start Streamlit
-CMD ["sh", "-c", "streamlit run frontend/streamlit_app.py \
-    --server.port ${PORT:-8080} \
-    --server.address 0.0.0.0 \
-    --server.enableCORS=false \
-    --server.enableXsrfProtection=false"]
+# Correct startup with environment variable expansion
+CMD ["sh", "-c", "streamlit run streamlit_app.py --server.port=$PORT --server.address=0.0.0.0"]
